@@ -15,6 +15,13 @@ console.log(enemyNames[1]);
 console.log(enemyNames[2]);
 console.log(enemyNames.length);
 
+//FUNCTION TO GENERATE A RANDOM NUMERIC VALUE
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
 
 // fight function
 var fight = function(enemyName) {
@@ -32,16 +39,15 @@ var fight = function(enemyName) {
                 if (confirmSkip) {
                     window.alert(playerName + " has decided to skip this fight.  Goodbye!");
                     // subtract money from playerMoney for skipping
-                    playerMoney = playerMoney - 10;
+                    playerMoney = Math.max (0, playerMoney - 10);
                     console.log("playerMoney", playerMoney);
                     break;
-                }
-   
+                }   
             }          
 
 
             //remove enemy's health by subtracting the amount set in the playerAttack variable
-            enemyHealth = enemyHealth - playerAttack;
+            enemyHealth = Math.max(0, enemyHealth - playerAttack);
             console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
 
             // check enemy's health
@@ -52,7 +58,7 @@ var fight = function(enemyName) {
                 window.alert(enemyName + " still has " + enemyHealth + " health left.");
             }
             // remove player's health by subtracting the amount set in the enemyAttack variable
-            playerHealth = playerHealth - enemyAttack;
+            playerHealth = Math.max(0, playerHealth - enemyAttack);
             console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
 
             // check player's health
@@ -80,7 +86,7 @@ var startGame = function() {
             // Select enemy to fight
             var pickedEnemyName = enemyNames[i];
             // Enemy starts with health of 50
-            enemyHealth =50;
+            enemyHealth = randomNumber();
             //Player and enamy go at it
             fight(pickedEnemyName);
             // if player is still alive and we're not at the last enemy in the array
@@ -91,8 +97,7 @@ var startGame = function() {
                 //if yes, take them to the store() function
                 if (storeConfirm) {
                     shop();
-                }
-                
+                }                
             }
         }
         else {
@@ -176,7 +181,6 @@ var shop = function() {
             shop();
             break;
     }
-
 };
 
 // start the game when the page loads
